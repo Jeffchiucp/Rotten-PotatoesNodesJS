@@ -1,5 +1,9 @@
 <!-- reviews-edit.handlebars -->
+<!-- Form -->
+
 <legend> Edit Review </legend>
-<form method="POST" action="/reviews?_method=PUT">
+<form method="POST" action="/reviews/{{review._id}}/?_method=PUT">
   {{> reviews-form}}
+  <!-- //http://localhost:3000/reviews?_method=PUT -->
+  <!--/reviews/:id/edit'-->
 </form>
