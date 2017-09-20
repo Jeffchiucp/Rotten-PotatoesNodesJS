@@ -8,16 +8,18 @@ mongoose.connect('mongodb://localhost/rotten-potatoes');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+// added mongoose
 var Review = mongoose.model('Review', {
   title: String,
   movieTitle: String,
   description: String,
   rating: Number
 });
-
+// create the handlebars for the app
 app.engine('handlebars', hb({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+// create the app and add the rendering function
 app.get('/', function (req, res) {
   Review.find(function(err, reviews) {
     res.render('reviews-index', {reviews: reviews});
@@ -34,12 +36,11 @@ app.get('/reviews/:id', function (req, res) {
   });
 });
 
-app.get('/reviews/:id/edit', function (req, res) {
   Review.findById(req.params.id, function (err, review) {
     res.render('reviews-edit', {review: review});
   });
 });
-
+//fixed the issue by adding edit id to reviews forms
 app.put('/reviews/:id', function (req, res) {
   console.log("trying to put");
   Review.findByIdAndUpdate(req.params.id,  req.body, function(err, review) {
@@ -57,9 +58,3 @@ app.post('/reviews', function (req, res) {
 app.listen(3000, function() {
   console.log("Listening on port 3000!");
 });
-
-
-// var reviews = [
-//   { title: "Great review" },
-//   { title: "Average review" }
-// ]
